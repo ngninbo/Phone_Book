@@ -80,7 +80,76 @@ files:
     \ CheckResult.wrong(\"Your hashtable works slower, than quick sort + binary search.\"\
     );\n        }\n        return CheckResult.correct();\n    }\n}\n"
   learner_created: false
-- name: src/phonebook/Person.java
+- name: src/phonebook/algorithm/searching/BaseSearch.java
+  visible: true
+  learner_created: true
+- name: src/phonebook/algorithm/searching/BinarySearch.java
+  visible: true
+  learner_created: true
+- name: src/phonebook/algorithm/searching/JumpSearch.java
+  visible: true
+  learner_created: true
+- name: src/phonebook/algorithm/searching/LinearSearch.java
+  visible: true
+  learner_created: true
+- name: src/phonebook/algorithm/sorting/BaseSort.java
+  visible: true
+  learner_created: true
+- name: src/phonebook/algorithm/sorting/BubbleSort.java
+  visible: true
+  learner_created: true
+- name: src/phonebook/algorithm/sorting/QuickSort.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    /**
+     * Utility functions for quick sort
+     * Adopted from https://www.geeksforgeeks.org/quick-sort/?ref=leftbar-rightbar
+     */
+    public class QuickSort {
+
+        static void swap(List<Person> list, int i, int j)
+        {
+            Person temp = list.get(i);
+            list.set(i, list.get(j));
+            list.set(j, temp);
+        }
+
+        static int partition(List<Person> list, int low, int high)
+        {
+
+            // pivot
+            String pivot = list.get(high).getName();
+
+            int i = (low - 1);
+
+            for (int j = low; j <= high - 1; j++) {
+
+                if (list.get(j).getName().compareTo(pivot) < 0) {
+
+                    i++;
+                    swap(list, i, j);
+                }
+            }
+            swap(list, i + 1, high);
+            return (i + 1);
+        }
+
+        static void quickSort(List<Person> list, int low, int high) {
+            if (low < high) {
+
+                int pi = partition(list, low, high);
+
+                quickSort(list, low, pi - 1);
+                quickSort(list, pi + 1, high);
+            }
+        }
+    }
+  learner_created: true
+- name: src/phonebook/model/Person.java
   visible: true
   text: |
     package phonebook;
@@ -135,84 +204,7 @@ files:
         }
     }
   learner_created: true
-- name: src/phonebook/SearchContext.java
-  visible: true
-  text: |
-    package phonebook;
-
-    import java.util.List;
-
-    public interface SearchContext {
-
-        SearchAlgorithm<Person> linearSearch(List<Person> people, List<String> names);
-        SearchAlgorithm<Person> bubbleSort(List<Person> persons, long duration);
-        SearchAlgorithm<Person> jumpSearch(List<Person> persons, List<String> names);
-        int jumpSearch(List<Person> persons, String name);
-
-        SearchAlgorithm<Person> quickSort(List<Person> persons);
-
-        SearchAlgorithm<Person> binarySearch(List<Person> results, List<String> names);
-        int binarySearch(List<Person> persons, int l, int r, String name);
-    }
-  learner_created: true
-- name: src/phonebook/Finder.java
-  visible: true
-  text: |
-    package phonebook;
-
-    import java.util.List;
-
-    public class Finder {
-
-        private final List<Person> persons;
-        private final List<String> names;
-
-        private final SearchContext cxt;
-
-        public Finder(List<Person> persons, List<String> names, SearchContext context) {
-            this.persons = persons;
-            this.names = names;
-            this.cxt = context;
-        }
-
-        public SearchAlgorithm<Person> linearSearch() {
-            return cxt.linearSearch(persons, names);
-        }
-
-        public SearchAlgorithm<Person> bubbleSort(long timeLimit) {
-            return cxt.bubbleSort(persons, timeLimit);
-        }
-
-        public SearchAlgorithm<Person> jumpSearch(List<Person> persons) {
-            return cxt.jumpSearch(persons, names);
-        }
-
-        public void jumpingBubbles(long lsDuration) {
-            var sorting = this.bubbleSort(lsDuration);
-            if (sorting.getResults().isEmpty()) {
-                var ls = this.linearSearch();
-                SearchUtil.printSearchResult(ls.getResults().size(), names.size(), sorting.getDuration() + ls.getDuration());
-                SearchUtil.printSortDuration(sorting.getDuration());
-                SearchUtil.printDuration("Searching", ls.getDuration());
-
-            } else {
-                var jumping = this.jumpSearch(sorting.getResults());
-                SearchUtil.printSearchResult(jumping.getResults().size(), names.size(), jumping.getDuration() + sorting.getDuration());
-                SearchUtil.printDuration("Sorting", sorting.getDuration());
-                SearchUtil.printDuration("Searching", jumping.getDuration());
-            }
-        }
-
-        public void quickBinary() {
-            var sort = cxt.quickSort(persons);
-            var search = cxt.binarySearch(sort.getResults(), names);
-            SearchUtil.printSearchResult(search.getResults().size(), names.size(), search.getDuration() + sort.getDuration());
-            SearchUtil.printDuration("Sorting", sort.getDuration());
-            SearchUtil.printDuration("Searching", search.getDuration());
-        }
-    }
-  learner_created: true
-- name: src/phonebook/SearchStrategy.java
+- name: src/phonebook/search/SearchStrategy.java
   visible: true
   text: |
     package phonebook;
@@ -362,6 +354,127 @@ files:
         }
     }
   learner_created: true
+- name: src/phonebook/search/SearchResult.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public class SearchAlgorithm<T> {
+
+        private String name;
+        private long duration;
+        private List<T> results;
+
+        public SearchAlgorithm(String name, long duration, List<T> results) {
+            this.name = name;
+            this.duration = duration;
+            this.results = results;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public long getDuration() {
+            return duration;
+        }
+
+        public void setDuration(long duration) {
+            this.duration = duration;
+        }
+
+        public List<T> getResults() {
+            return results;
+        }
+
+        public void setResults(List<T> results) {
+            this.results = results;
+        }
+    }
+  learner_created: true
+- name: src/phonebook/search/SearchContext.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public interface SearchContext {
+
+        SearchAlgorithm<Person> linearSearch(List<Person> people, List<String> names);
+        SearchAlgorithm<Person> bubbleSort(List<Person> persons, long duration);
+        SearchAlgorithm<Person> jumpSearch(List<Person> persons, List<String> names);
+        int jumpSearch(List<Person> persons, String name);
+
+        SearchAlgorithm<Person> quickSort(List<Person> persons);
+
+        SearchAlgorithm<Person> binarySearch(List<Person> results, List<String> names);
+        int binarySearch(List<Person> persons, int l, int r, String name);
+    }
+  learner_created: true
+- name: src/phonebook/PhoneRepository.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public class Finder {
+
+        private final List<Person> persons;
+        private final List<String> names;
+
+        private final SearchContext cxt;
+
+        public Finder(List<Person> persons, List<String> names, SearchContext context) {
+            this.persons = persons;
+            this.names = names;
+            this.cxt = context;
+        }
+
+        public SearchAlgorithm<Person> linearSearch() {
+            return cxt.linearSearch(persons, names);
+        }
+
+        public SearchAlgorithm<Person> bubbleSort(long timeLimit) {
+            return cxt.bubbleSort(persons, timeLimit);
+        }
+
+        public SearchAlgorithm<Person> jumpSearch(List<Person> persons) {
+            return cxt.jumpSearch(persons, names);
+        }
+
+        public void jumpingBubbles(long lsDuration) {
+            var sorting = this.bubbleSort(lsDuration);
+            if (sorting.getResults().isEmpty()) {
+                var ls = this.linearSearch();
+                SearchUtil.printSearchResult(ls.getResults().size(), names.size(), sorting.getDuration() + ls.getDuration());
+                SearchUtil.printSortDuration(sorting.getDuration());
+                SearchUtil.printDuration("Searching", ls.getDuration());
+
+            } else {
+                var jumping = this.jumpSearch(sorting.getResults());
+                SearchUtil.printSearchResult(jumping.getResults().size(), names.size(), jumping.getDuration() + sorting.getDuration());
+                SearchUtil.printDuration("Sorting", sorting.getDuration());
+                SearchUtil.printDuration("Searching", jumping.getDuration());
+            }
+        }
+
+        public void quickBinary() {
+            var sort = cxt.quickSort(persons);
+            var search = cxt.binarySearch(sort.getResults(), names);
+            SearchUtil.printSearchResult(search.getResults().size(), names.size(), search.getDuration() + sort.getDuration());
+            SearchUtil.printDuration("Sorting", sort.getDuration());
+            SearchUtil.printDuration("Searching", search.getDuration());
+        }
+    }
+  learner_created: true
 - name: src/phonebook/SearchUtil.java
   visible: true
   text: |
@@ -435,101 +548,6 @@ files:
             final long seconds = duration % (minute * millisecond) / millisecond;
             final long milliseconds = duration % (minute * millisecond) % millisecond;
             System.out.printf("Sorting time: %d min. %d sec. %d ms. - STOPPED, moved to linear search\n", minutes, seconds, milliseconds);
-        }
-    }
-  learner_created: true
-- name: src/phonebook/QuickSort.java
-  visible: true
-  text: |
-    package phonebook;
-
-    import java.util.List;
-
-    /**
-     * Utility functions for quick sort
-     * Adopted from https://www.geeksforgeeks.org/quick-sort/?ref=leftbar-rightbar
-     */
-    public class QuickSort {
-
-        static void swap(List<Person> list, int i, int j)
-        {
-            Person temp = list.get(i);
-            list.set(i, list.get(j));
-            list.set(j, temp);
-        }
-
-        static int partition(List<Person> list, int low, int high)
-        {
-
-            // pivot
-            String pivot = list.get(high).getName();
-
-            int i = (low - 1);
-
-            for (int j = low; j <= high - 1; j++) {
-
-                if (list.get(j).getName().compareTo(pivot) < 0) {
-
-                    i++;
-                    swap(list, i, j);
-                }
-            }
-            swap(list, i + 1, high);
-            return (i + 1);
-        }
-
-        static void quickSort(List<Person> list, int low, int high) {
-            if (low < high) {
-
-                int pi = partition(list, low, high);
-
-                quickSort(list, low, pi - 1);
-                quickSort(list, pi + 1, high);
-            }
-        }
-    }
-  learner_created: true
-- name: src/phonebook/SearchResult.java
-  visible: true
-  text: |
-    package phonebook;
-
-    import java.util.List;
-
-    public class SearchAlgorithm<T> {
-
-        private String name;
-        private long duration;
-        private List<T> results;
-
-        public SearchAlgorithm(String name, long duration, List<T> results) {
-            this.name = name;
-            this.duration = duration;
-            this.results = results;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public long getDuration() {
-            return duration;
-        }
-
-        public void setDuration(long duration) {
-            this.duration = duration;
-        }
-
-        public List<T> getResults() {
-            return results;
-        }
-
-        public void setResults(List<T> results) {
-            this.results = results;
         }
     }
   learner_created: true

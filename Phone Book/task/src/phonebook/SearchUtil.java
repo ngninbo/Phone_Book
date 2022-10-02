@@ -1,5 +1,7 @@
 package phonebook;
 
+import phonebook.model.Person;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

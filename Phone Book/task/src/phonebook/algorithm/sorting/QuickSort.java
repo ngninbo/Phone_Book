@@ -1,4 +1,7 @@
-package phonebook;
+package phonebook.algorithm.sorting;
+
+import phonebook.model.Person;
+import phonebook.search.SearchResult;
 
 import java.util.List;
 
@@ -6,17 +9,27 @@ import java.util.List;
  * Utility functions for quick sort
  * Adopted from https://www.geeksforgeeks.org/quick-sort/?ref=leftbar-rightbar
  */
-public class QuickSort {
+public class QuickSort extends BaseSort {
 
-    static void swap(List<Person> list, int i, int j)
-    {
+    public QuickSort(List<Person> persons) {
+        super(persons);
+    }
+
+    public SearchResult<Person> quickSort() {
+        long start = System.currentTimeMillis();
+        quickSort(persons, 0, persons.size() - 1);
+        long end = System.currentTimeMillis();
+        duration = end - start;
+        return new SearchResult<>("Sorting", duration, persons);
+    }
+
+    static void swap(List<Person> list, int i, int j) {
         Person temp = list.get(i);
         list.set(i, list.get(j));
         list.set(j, temp);
     }
 
-    static int partition(List<Person> list, int low, int high)
-    {
+    static int partition(List<Person> list, int low, int high) {
 
         // pivot
         String pivot = list.get(high).getName();
@@ -35,7 +48,7 @@ public class QuickSort {
         return (i + 1);
     }
 
-    static void quickSort(List<Person> list, int low, int high) {
+    public static void quickSort(List<Person> list, int low, int high) {
         if (low < high) {
 
             int pi = partition(list, low, high);

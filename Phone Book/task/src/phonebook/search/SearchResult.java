@@ -1,25 +1,27 @@
-package phonebook;
+package phonebook.search;
+
+import phonebook.SearchUtil;
 
 import java.util.List;
 
 public class SearchResult<T> {
 
-    private String name;
+    private String opt;
     private long duration;
     private List<T> results;
 
-    public SearchResult(String name, long duration, List<T> results) {
-        this.name = name;
+    public SearchResult(String opt, long duration, List<T> results) {
+        this.opt = opt;
         this.duration = duration;
         this.results = results;
     }
 
-    public String getName() {
-        return name;
+    public String getOpt() {
+        return opt;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOpt(String opt) {
+        this.opt = opt;
     }
 
     public long getDuration() {
@@ -36,5 +38,9 @@ public class SearchResult<T> {
 
     public void setResults(List<T> results) {
         this.results = results;
+    }
+
+    public void printDuration() {
+        SearchUtil.printDuration(opt, duration);
     }
 }

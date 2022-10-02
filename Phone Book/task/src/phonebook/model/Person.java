@@ -1,4 +1,4 @@
-package phonebook;
+package phonebook.model;
 
 import java.util.Objects;
 

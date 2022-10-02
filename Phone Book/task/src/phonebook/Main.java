@@ -1,5 +1,8 @@
 package phonebook;
 
+import phonebook.model.Person;
+import phonebook.search.SearchStrategy;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -11,20 +14,19 @@ public class Main {
             List<Person> persons = SearchUtil.getPersons();
             List<String> names = SearchUtil.loadNames();
 
-            Finder finder = new Finder(persons, names, new SearchStrategy());
+            PhoneRepository phoneRepository = new PhoneRepository(persons, names, new SearchStrategy());
 
             System.out.println("Start searching (linear search)...");
-            SearchResult<Person> linearSearch = finder.linearSearch();
-            SearchUtil.printSearchResult(linearSearch.getResults().size(), names.size(), linearSearch.getDuration());
+            long duration = phoneRepository.linearSearch();
 
             System.out.println("\nStart searching (bubble sort + jump search)...");
-            finder.jumpingBubbles(linearSearch.getDuration());
+            phoneRepository.jumpingBubbles(duration);
 
             System.out.println("\nStart searching (quick sort + binary search)...");
-            finder.quickBinary();
+            phoneRepository.quickBinary();
 
             System.out.println("\nStart searching (hash table)...");
-            finder.instantSearch();
+            phoneRepository.instantSearch();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
