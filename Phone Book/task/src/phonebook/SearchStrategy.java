@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class SearchStrategy implements SearchContext {
 
-    public SearchAlgorithm<Person> linearSearch(List<Person> persons, List<String> names) {
+    public SearchResult<Person> linearSearch(List<Person> persons, List<String> names) {
 
         List<Person> results = new ArrayList<>();
         long start = System.currentTimeMillis();
@@ -21,10 +21,10 @@ public class SearchStrategy implements SearchContext {
 
         long duration = end - start;
 
-        return new SearchAlgorithm<>("linear search", duration, results);
+        return new SearchResult<>("linear search", duration, results);
     }
 
-    public SearchAlgorithm<Person> bubbleSort(List<Person> persons, long limit) {
+    public SearchResult<Person> bubbleSort(List<Person> persons, long limit) {
 
         int n = persons.size();
 
@@ -43,7 +43,7 @@ public class SearchStrategy implements SearchContext {
 
                 final long tmpDuration = tmp - start;
                 if (tmpDuration > 10 * limit) {
-                    return new SearchAlgorithm<>("Bubble sort", tmpDuration, List.of());
+                    return new SearchResult<>("Bubble sort", tmpDuration, List.of());
                 }
             }
         }
@@ -51,10 +51,10 @@ public class SearchStrategy implements SearchContext {
 
         long duration = end - start;
 
-        return new SearchAlgorithm<>("Bubble sort", duration, persons);
+        return new SearchResult<>("Bubble sort", duration, persons);
     }
 
-    public SearchAlgorithm<Person> jumpSearch(List<Person> persons, List<String> names) {
+    public SearchResult<Person> jumpSearch(List<Person> persons, List<String> names) {
         List<Person> results = new ArrayList<>();
         int idx;
 
@@ -69,7 +69,7 @@ public class SearchStrategy implements SearchContext {
         long end = System.currentTimeMillis();
         long duration = end - start;
 
-        return new SearchAlgorithm<>("jump search", duration, results);
+        return new SearchResult<>("jump search", duration, results);
     }
 
     public int jumpSearch(List<Person> sortedPersons, String name) {
@@ -101,16 +101,16 @@ public class SearchStrategy implements SearchContext {
     }
 
     @Override
-    public SearchAlgorithm<Person> quickSort(List<Person> persons) {
+    public SearchResult<Person> quickSort(List<Person> persons) {
         long start = System.currentTimeMillis();
         QuickSort.quickSort(persons, 0, persons.size() - 1);
         long end = System.currentTimeMillis();
         long duration = end - start;
-        return new SearchAlgorithm<>("Quick sort", duration, persons);
+        return new SearchResult<>("Quick sort", duration, persons);
     }
 
     @Override
-    public SearchAlgorithm<Person> binarySearch(List<Person> persons, List<String> names) {
+    public SearchResult<Person> binarySearch(List<Person> persons, List<String> names) {
         List<Person> results = new ArrayList<>();
         int idx;
 
@@ -124,7 +124,7 @@ public class SearchStrategy implements SearchContext {
 
         long end = System.currentTimeMillis();
         long duration = end - start;
-        return new SearchAlgorithm<>("Binary search", duration, results);
+        return new SearchResult<>("Binary search", duration, results);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class SearchStrategy implements SearchContext {
     }
 
     @Override
-    public SearchAlgorithm<Person> instantSearch(Map<String, Person> map, List<String> names) {
+    public SearchResult<Person> instantSearch(Map<String, Person> map, List<String> names) {
 
         List<Person> searchResult = new ArrayList<>();
         long start = System.currentTimeMillis();
@@ -159,6 +159,6 @@ public class SearchStrategy implements SearchContext {
         long end = System.currentTimeMillis();
         long searchDuration = end - start;
 
-        return new SearchAlgorithm<>("Instant search", searchDuration, searchResult);
+        return new SearchResult<>("Instant search", searchDuration, searchResult);
     }
 }

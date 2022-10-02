@@ -14,7 +14,7 @@ public class Main {
             Finder finder = new Finder(persons, names, new SearchStrategy());
 
             System.out.println("Start searching (linear search)...");
-            SearchAlgorithm<Person> linearSearch = finder.linearSearch();
+            SearchResult<Person> linearSearch = finder.linearSearch();
             SearchUtil.printSearchResult(linearSearch.getResults().size(), names.size(), linearSearch.getDuration());
 
             System.out.println("\nStart searching (bubble sort + jump search)...");

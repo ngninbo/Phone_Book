@@ -1,6 +1,5 @@
 package phonebook;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,15 +18,15 @@ public class Finder {
         this.cxt = context;
     }
 
-    public SearchAlgorithm<Person> linearSearch() {
+    public SearchResult<Person> linearSearch() {
         return cxt.linearSearch(persons, names);
     }
 
-    public SearchAlgorithm<Person> bubbleSort(long timeLimit) {
+    public SearchResult<Person> bubbleSort(long timeLimit) {
         return cxt.bubbleSort(persons, timeLimit);
     }
 
-    public SearchAlgorithm<Person> jumpSearch(List<Person> persons) {
+    public SearchResult<Person> jumpSearch(List<Person> persons) {
         return cxt.jumpSearch(persons, names);
     }
 

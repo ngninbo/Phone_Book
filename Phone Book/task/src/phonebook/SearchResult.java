@@ -2,13 +2,13 @@ package phonebook;
 
 import java.util.List;
 
-public class SearchAlgorithm<T> {
+public class SearchResult<T> {
 
     private String name;
     private long duration;
     private List<T> results;
 
-    public SearchAlgorithm(String name, long duration, List<T> results) {
+    public SearchResult(String name, long duration, List<T> results) {
         this.name = name;
         this.duration = duration;
         this.results = results;

@@ -155,50 +155,6 @@ files:
         int binarySearch(List<Person> persons, int l, int r, String name);
     }
   learner_created: true
-- name: src/phonebook/SearchAlgorithm.java
-  visible: true
-  text: |
-    package phonebook;
-
-    import java.util.List;
-
-    public class SearchAlgorithm<T> {
-
-        private String name;
-        private long duration;
-        private List<T> results;
-
-        public SearchAlgorithm(String name, long duration, List<T> results) {
-            this.name = name;
-            this.duration = duration;
-            this.results = results;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public long getDuration() {
-            return duration;
-        }
-
-        public void setDuration(long duration) {
-            this.duration = duration;
-        }
-
-        public List<T> getResults() {
-            return results;
-        }
-
-        public void setResults(List<T> results) {
-            this.results = results;
-        }
-    }
-  learner_created: true
 - name: src/phonebook/Finder.java
   visible: true
   text: |
@@ -530,6 +486,50 @@ files:
                 quickSort(list, low, pi - 1);
                 quickSort(list, pi + 1, high);
             }
+        }
+    }
+  learner_created: true
+- name: src/phonebook/SearchResult.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public class SearchAlgorithm<T> {
+
+        private String name;
+        private long duration;
+        private List<T> results;
+
+        public SearchAlgorithm(String name, long duration, List<T> results) {
+            this.name = name;
+            this.duration = duration;
+            this.results = results;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public long getDuration() {
+            return duration;
+        }
+
+        public void setDuration(long duration) {
+            this.duration = duration;
+        }
+
+        public List<T> getResults() {
+            return results;
+        }
+
+        public void setResults(List<T> results) {
+            this.results = results;
         }
     }
   learner_created: true
