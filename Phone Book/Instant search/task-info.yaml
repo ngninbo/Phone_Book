@@ -1,0 +1,542 @@
+type: edu
+custom_name: stage4
+files:
+- name: src/phonebook/Main.java
+  visible: true
+  text: |
+    package phonebook;
+
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Hello World!");
+        }
+    }
+  learner_created: false
+- name: test/PhoneBookTest.java
+  visible: false
+  text: "import org.hyperskill.hstest.stage.StageTest;\nimport org.hyperskill.hstest.testcase.CheckResult;\n\
+    import org.hyperskill.hstest.testcase.TestCase;\n\nimport java.util.ArrayList;\n\
+    import java.util.Arrays;\nimport java.util.List;\nimport java.util.regex.Matcher;\n\
+    import java.util.regex.Pattern;\n\npublic class PhoneBookTest extends StageTest\
+    \ {\n\n    private long timeOnTestStart;\n    \n    @Override\n    public List<TestCase>\
+    \ generate() {\n        timeOnTestStart = System.currentTimeMillis();\n      \
+    \  return Arrays.asList(\n            new TestCase().setTimeLimit(30 * 60 * 1000)\n\
+    \        );\n    }\n    \n    \n    private CheckResult checkPhrases(String reply,\
+    \ String... phrases) {\n        reply = reply.toLowerCase();\n        for (String\
+    \ phrase : phrases) {\n            if (!reply.contains(phrase.toLowerCase()))\
+    \ {\n                return CheckResult.wrong(\"Not found the part `\" + phrase\
+    \ + \"` in your output.\");\n            }\n        }\n        return CheckResult.correct();\n\
+    \    }\n    \n    private List<String> findAll(String reply, String regex) {\n\
+    \        Matcher matcher = Pattern.compile(regex).matcher(reply);\n        List<String>\
+    \ groups = new ArrayList<>();\n        while (matcher.find()) {\n            groups.add(matcher.group());\n\
+    \        }\n        return groups;\n    }\n    \n    private String timeRegex\
+    \ = \"(\\\\d+)\\\\s*min.*?(\\\\d+)\\\\s*sec.*?(\\\\d+)\\\\s*ms\";\n    private\
+    \ Pattern timeRegexPattern = Pattern.compile(timeRegex);\n    \n    private long\
+    \ parseTimestamp(String timestamp) {\n        Matcher matcher = timeRegexPattern.matcher(timestamp);\n\
+    \        if (!matcher.matches() || matcher.groupCount() < 3) {\n            throw\
+    \ new IllegalStateException(\"???Not matches the line \" + timestamp);\n     \
+    \   }\n        int min = Integer.parseInt(matcher.group(1));\n        int sec\
+    \ = Integer.parseInt(matcher.group(2));\n        int ms = Integer.parseInt(matcher.group(3));\n\
+    \        return ms + sec * 1000 + min * 1000 * 60;\n    }\n    \n    \n    \n\
+    \    @Override\n    public CheckResult check(String reply, Object clue) {\n  \
+    \      long realTime = System.currentTimeMillis() - timeOnTestStart;\n       \
+    \ reply = reply.toLowerCase();\n        CheckResult res = checkPhrases(reply,\n\
+    \                \"found\",\n                \"min.\",\n                \"sec.\"\
+    ,\n                \"ms.\",\n                \"sorting time\",\n             \
+    \   \"searching time\",\n                \"linear search\",\n                \"\
+    bubble sort\",\n                \"jump search\",\n                \"quick sort\"\
+    ,\n                \"binary search\",\n                \"hash table\",\n     \
+    \           \"creating time\"\n        );\n        if (!res.isCorrect()) {\n \
+    \           return res;\n        }\n    \n        List<String> stat1 = findAll(reply,\
+    \ \"500 / 500\");\n        List<String> stat2 = findAll(reply, \"500/500\");\n\
+    \    \n        if (stat1.size() + stat2.size() < 4) {\n            return CheckResult.wrong(\"\
+    Your output should contain 4 times the phrase `500 / 500`\");\n        }\n   \
+    \ \n        List<String> timestamps = findAll(reply, timeRegex);\n        if (timestamps.size()\
+    \ != 10) {\n            return CheckResult.wrong(\"Your output should contain\
+    \ 10 timer outputs, but found \"\n                    + timestamps.size());\n\
+    \        }\n        // should not fail..\n        long t1 = parseTimestamp(timestamps.get(0));\n\
+    \        long t2 = parseTimestamp(timestamps.get(1));\n        long t3 = parseTimestamp(timestamps.get(2));\n\
+    \        long t4 = parseTimestamp(timestamps.get(3));\n        // qsort\n    \
+    \    long t5 = parseTimestamp(timestamps.get(4));\n        long t6 = parseTimestamp(timestamps.get(5));\n\
+    \        long t7 = parseTimestamp(timestamps.get(6));\n        // hash table\n\
+    \        long t8 = parseTimestamp(timestamps.get(7));\n        long t9 = parseTimestamp(timestamps.get(8));\n\
+    \        long t10 = parseTimestamp(timestamps.get(9));\n    \n        if (Math.abs(t3\
+    \ + t4 - t2) > 100) {\n            return CheckResult.wrong(\"Your third and fourth\
+    \ timer outputs in total (bubble sorting and searching) \" +\n               \
+    \     \"should be equal to the second (total search time).\");\n        }\n  \
+    \      if (Math.abs(t6 + t7 - t5) > 100) {\n            return CheckResult.wrong(\"\
+    Your 6-th and 7-th timer outputs in total (qsort and searching) \" +\n       \
+    \             \"should be equal to the 5-th (total search time).\");\n       \
+    \ }\n        if (Math.abs(t9 + t10 - t8) > 100) {\n            return CheckResult.wrong(\"\
+    Your 9-th and 10-th timer outputs in total (creating hashtable and searching)\
+    \ \" +\n                    \"should be equal to the 8-th (total search time).\"\
+    );\n        }\n    \n        long estimatedTime = t1 + t2 + t5 + t8;\n       \
+    \ if (realTime < 1000) {\n            return CheckResult.wrong(\"Your program\
+    \ completes too fast. Faster than a second!\");\n        }\n\n        if (Math.abs(estimatedTime\
+    \ - realTime) > estimatedTime * 0.3) {\n            return CheckResult.wrong(\"\
+    Your estimated time is not similar to real time the program works. \" +\n    \
+    \                \"Real time: \" + realTime + \"ms, estimated time: \" + estimatedTime\
+    \ + \"ms\");\n        }\n        \n        if (t8 >= t5) {\n            return\
+    \ CheckResult.wrong(\"Your hashtable works slower, than quick sort + binary search.\"\
+    );\n        }\n        return CheckResult.correct();\n    }\n}\n"
+  learner_created: false
+- name: src/phonebook/Person.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.Objects;
+
+    public class Person {
+
+        private String number;
+        private String name;
+
+        public Person(String number, String name) {
+            this.number = number;
+            this.name = name;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void setNumber(String number) {
+            this.number = number;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Person)) return false;
+            Person person = (Person) o;
+            return Objects.equals(getNumber(), person.getNumber()) && Objects.equals(getName(), person.getName());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getNumber(), getName());
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "number='" + number + '\'' +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
+    }
+  learner_created: true
+- name: src/phonebook/SearchContext.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public interface SearchContext {
+
+        SearchAlgorithm<Person> linearSearch(List<Person> people, List<String> names);
+        SearchAlgorithm<Person> bubbleSort(List<Person> persons, long duration);
+        SearchAlgorithm<Person> jumpSearch(List<Person> persons, List<String> names);
+        int jumpSearch(List<Person> persons, String name);
+
+        SearchAlgorithm<Person> quickSort(List<Person> persons);
+
+        SearchAlgorithm<Person> binarySearch(List<Person> results, List<String> names);
+        int binarySearch(List<Person> persons, int l, int r, String name);
+    }
+  learner_created: true
+- name: src/phonebook/SearchAlgorithm.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public class SearchAlgorithm<T> {
+
+        private String name;
+        private long duration;
+        private List<T> results;
+
+        public SearchAlgorithm(String name, long duration, List<T> results) {
+            this.name = name;
+            this.duration = duration;
+            this.results = results;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public long getDuration() {
+            return duration;
+        }
+
+        public void setDuration(long duration) {
+            this.duration = duration;
+        }
+
+        public List<T> getResults() {
+            return results;
+        }
+
+        public void setResults(List<T> results) {
+            this.results = results;
+        }
+    }
+  learner_created: true
+- name: src/phonebook/Finder.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    public class Finder {
+
+        private final List<Person> persons;
+        private final List<String> names;
+
+        private final SearchContext cxt;
+
+        public Finder(List<Person> persons, List<String> names, SearchContext context) {
+            this.persons = persons;
+            this.names = names;
+            this.cxt = context;
+        }
+
+        public SearchAlgorithm<Person> linearSearch() {
+            return cxt.linearSearch(persons, names);
+        }
+
+        public SearchAlgorithm<Person> bubbleSort(long timeLimit) {
+            return cxt.bubbleSort(persons, timeLimit);
+        }
+
+        public SearchAlgorithm<Person> jumpSearch(List<Person> persons) {
+            return cxt.jumpSearch(persons, names);
+        }
+
+        public void jumpingBubbles(long lsDuration) {
+            var sorting = this.bubbleSort(lsDuration);
+            if (sorting.getResults().isEmpty()) {
+                var ls = this.linearSearch();
+                SearchUtil.printSearchResult(ls.getResults().size(), names.size(), sorting.getDuration() + ls.getDuration());
+                SearchUtil.printSortDuration(sorting.getDuration());
+                SearchUtil.printDuration("Searching", ls.getDuration());
+
+            } else {
+                var jumping = this.jumpSearch(sorting.getResults());
+                SearchUtil.printSearchResult(jumping.getResults().size(), names.size(), jumping.getDuration() + sorting.getDuration());
+                SearchUtil.printDuration("Sorting", sorting.getDuration());
+                SearchUtil.printDuration("Searching", jumping.getDuration());
+            }
+        }
+
+        public void quickBinary() {
+            var sort = cxt.quickSort(persons);
+            var search = cxt.binarySearch(sort.getResults(), names);
+            SearchUtil.printSearchResult(search.getResults().size(), names.size(), search.getDuration() + sort.getDuration());
+            SearchUtil.printDuration("Sorting", sort.getDuration());
+            SearchUtil.printDuration("Searching", search.getDuration());
+        }
+    }
+  learner_created: true
+- name: src/phonebook/SearchStrategy.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class SearchStrategy implements SearchContext {
+
+        public SearchAlgorithm<Person> linearSearch(List<Person> persons, List<String> names) {
+
+            List<Person> results = new ArrayList<>();
+            long start = System.currentTimeMillis();
+            for (String name : names) {
+                for (Person person : persons) {
+                    if (person.getName().equals(name)) {
+                        results.add(person);
+                    }
+                }
+            }
+            long end = System.currentTimeMillis();
+
+            long duration = end - start;
+
+            return new SearchAlgorithm<>("linear search", duration, results);
+        }
+
+        public SearchAlgorithm<Person> bubbleSort(List<Person> persons, long limit) {
+
+            int n = persons.size();
+
+            long start = System.currentTimeMillis();
+            for (int i = 0; i < n; i++) {
+                for (int j = i + 1; j < n; j++) {
+                    Person current = persons.get(i);
+                    Person next = persons.get(j);
+
+                    if (current.getName().compareTo(next.getName()) > 0) {
+                        persons.set(i, next);
+                        persons.set(j, current);
+                    }
+
+                    long tmp = System.currentTimeMillis();
+
+                    final long tmpDuration = tmp - start;
+                    if (tmpDuration > 10 * limit) {
+                        return new SearchAlgorithm<>("Bubble sort", tmpDuration, List.of());
+                    }
+                }
+            }
+            long end = System.currentTimeMillis();
+
+            long duration = end - start;
+
+            return new SearchAlgorithm<>("Bubble sort", duration, persons);
+        }
+
+        public SearchAlgorithm<Person> jumpSearch(List<Person> persons, List<String> names) {
+            List<Person> results = new ArrayList<>();
+            int idx;
+
+            long start = System.currentTimeMillis();
+            for (String name : names) {
+                idx = jumpSearch(persons, name);
+                if (idx != -1) {
+                    results.add(persons.get(idx));
+                }
+            }
+
+            long end = System.currentTimeMillis();
+            long duration = end - start;
+
+            return new SearchAlgorithm<>("jump search", duration, results);
+        }
+
+        public int jumpSearch(List<Person> sortedPersons, String name) {
+            int n = sortedPersons.size();
+            int prev = 0;
+
+            int step = (int) Math.floor(Math.sqrt(n));
+
+            while (sortedPersons.get(Math.min(step, n) - 1).getName().compareTo(name) < 0)
+            {
+                prev = step;
+                step += (int) Math.floor(Math.sqrt(n));
+                if (prev >= n)
+                    return -1;
+            }
+
+            while (sortedPersons.get(prev).getName().compareTo(name) < 0)
+            {
+                prev++;
+
+                if (prev == Math.min(step, n))
+                    return -1;
+            }
+
+            if (sortedPersons.get(prev).getName().compareTo(name) == 0)
+                return prev;
+
+            return -1;
+        }
+
+        @Override
+        public SearchAlgorithm<Person> quickSort(List<Person> persons) {
+            long start = System.currentTimeMillis();
+            QuickSort.quickSort(persons, 0, persons.size() - 1);
+            long end = System.currentTimeMillis();
+            long duration = end - start;
+            return new SearchAlgorithm<>("Quick sort", duration, persons);
+        }
+
+        @Override
+        public SearchAlgorithm<Person> binarySearch(List<Person> persons, List<String> names) {
+            List<Person> results = new ArrayList<>();
+            int idx;
+
+            long start = System.currentTimeMillis();
+            for (String name : names) {
+                idx = binarySearch(persons, 0, persons.size(), name);
+                if (idx != -1) {
+                    results.add(persons.get(idx));
+                }
+            }
+
+            long end = System.currentTimeMillis();
+            long duration = end - start;
+            return new SearchAlgorithm<>("Binary search", duration, results);
+        }
+
+        @Override
+        public int binarySearch(List<Person> list, int left, int right, String name) {
+
+            if (right >= left) {
+                int middle = left + (right - left) / 2;
+
+                if (list.get(middle).getName().compareTo(name) == 0)
+                    return middle;
+
+                if (list.get(middle).getName().compareTo(name) > 0)
+                    return binarySearch(list, left, middle - 1, name);
+
+                return binarySearch(list, middle + 1, right, name);
+            }
+
+            return -1;
+        }
+    }
+  learner_created: true
+- name: src/phonebook/SearchUtil.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.io.File;
+    import java.io.FileNotFoundException;
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Scanner;
+    import java.util.regex.Matcher;
+    import java.util.regex.Pattern;
+
+    public class SearchUtil {
+
+        public static final String DIRECTORY_PATH = "/Users/bdongmo-ngnintedem/Downloads/directory.txt";
+        public static final String FIND_PATH = "/Users/bdongmo-ngnintedem/Downloads/find.txt";
+
+        private static final long millisecond = 1000; //s
+        private static final long minute = 60; // s
+
+        public static List<Person> getPersons() throws FileNotFoundException {
+            List<Person> persons = new ArrayList<>();
+            File file = new File(DIRECTORY_PATH);
+
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                final Pattern pattern = Pattern.compile("\\d+");
+                final Matcher matcher = pattern.matcher(line);
+
+                if (matcher.find()) {
+                    String number = matcher.group();
+                    String name = line.replace(number, "").trim();
+                    Person person = new Person(number, name);
+                    persons.add(person);
+                }
+            }
+
+            return persons;
+        }
+
+        public static List<String> loadNames() throws FileNotFoundException {
+            List<String> names = new ArrayList<>();
+            File file = new File(FIND_PATH);
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNext()) {
+                names.add(scanner.nextLine());
+            }
+
+            return names;
+        }
+
+        public static void printSearchResult(int resultLength, int searchLength, long duration) {
+            final long minutes = duration / (minute * millisecond);
+            final long seconds = duration % (minute * millisecond) / millisecond;
+            final long milliseconds = duration % (minute * millisecond) % millisecond;
+            System.out.printf("Found %d / %d entries. Time taken: %d min. %d sec. %d ms.\n",
+                    resultLength, searchLength, minutes, seconds, milliseconds);
+        }
+
+        public static void printDuration(String opt, long duration) {
+            final long minutes = duration / (minute * millisecond);
+            final long seconds = duration % (minute * millisecond) / millisecond;
+            final long milliseconds = duration % (minute * millisecond) % millisecond;
+            System.out.printf("%s time: %d min. %d sec. %d ms.\n", opt, minutes, seconds, milliseconds);
+        }
+
+        public static void printSortDuration(long duration) {
+            final long minutes = duration / (minute * millisecond);
+            final long seconds = duration % (minute * millisecond) / millisecond;
+            final long milliseconds = duration % (minute * millisecond) % millisecond;
+            System.out.printf("Sorting time: %d min. %d sec. %d ms. - STOPPED, moved to linear search\n", minutes, seconds, milliseconds);
+        }
+    }
+  learner_created: true
+- name: src/phonebook/QuickSort.java
+  visible: true
+  text: |
+    package phonebook;
+
+    import java.util.List;
+
+    /**
+     * Utility functions for quick sort
+     * Adopted from https://www.geeksforgeeks.org/quick-sort/?ref=leftbar-rightbar
+     */
+    public class QuickSort {
+
+        static void swap(List<Person> list, int i, int j)
+        {
+            Person temp = list.get(i);
+            list.set(i, list.get(j));
+            list.set(j, temp);
+        }
+
+        static int partition(List<Person> list, int low, int high)
+        {
+
+            // pivot
+            String pivot = list.get(high).getName();
+
+            int i = (low - 1);
+
+            for (int j = low; j <= high - 1; j++) {
+
+                if (list.get(j).getName().compareTo(pivot) < 0) {
+
+                    i++;
+                    swap(list, i, j);
+                }
+            }
+            swap(list, i + 1, high);
+            return (i + 1);
+        }
+
+        static void quickSort(List<Person> list, int low, int high) {
+            if (low < high) {
+
+                int pi = partition(list, low, high);
+
+                quickSort(list, low, pi - 1);
+                quickSort(list, pi + 1, high);
+            }
+        }
+    }
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/7721#comment
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Sun, 02 Oct 2022 10:51:42 UTC
+record: -1
