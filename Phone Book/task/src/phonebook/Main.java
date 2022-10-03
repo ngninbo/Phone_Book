@@ -1,6 +1,6 @@
 package phonebook;
 
-import phonebook.search.SearchStrategy;
+import phonebook.search.SearchingStrategy;
 import phonebook.search.SortingStrategy;
 
 import java.io.FileNotFoundException;
@@ -11,10 +11,10 @@ public class Main {
 
         try {
 
-            SearchFactory searchFactory = new SearchFactory()
-                    .init()
-                    .withContext(new SearchStrategy())
-                    .withSortingContext(new SortingStrategy());
+            SearchFactory searchFactory = SearchFactoryBuilder.init()
+                    .withSearchingContext(new SearchingStrategy())
+                    .withSortingContext(new SortingStrategy())
+                    .build();
 
             System.out.println("Start searching (linear search)...");
             long duration = searchFactory.linearSearch();

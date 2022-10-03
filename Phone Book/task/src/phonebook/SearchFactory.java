@@ -4,12 +4,10 @@ import phonebook.algorithm.searching.BaseSearch;
 import phonebook.algorithm.searching.InstantSearch;
 import phonebook.algorithm.sorting.BaseSort;
 import phonebook.model.Person;
-import phonebook.search.SearchContext;
+import phonebook.search.SearchingContext;
 import phonebook.search.SortingContext;
-import phonebook.search.SortingStrategy;
 import phonebook.util.SearchUtil;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,28 +15,18 @@ import java.util.stream.IntStream;
 
 public class SearchFactory {
 
-    private List<Person> persons;
-    private List<String> names;
+    private final List<Person> persons;
+    private final List<String> names;
 
-    private SearchContext searchContext;
+    private final SearchingContext searchContext;
 
-    private SortingContext sortingContext;
+    private final SortingContext sortingContext;
 
-    public SearchFactory init() throws FileNotFoundException {
-        persons = SearchUtil.loadPersons();
-        names = SearchUtil.loadNames();
-
-        return this;
-    }
-
-    public SearchFactory withContext(SearchContext context) {
-        this.searchContext = context;
-        return this;
-    }
-
-    public SearchFactory withSortingContext(SortingStrategy sortingStrategy) {
-        this.sortingContext = sortingStrategy;
-        return this;
+    public SearchFactory(List<Person> persons, List<String> names, SearchingContext searchingContext, SortingContext sortingContext) {
+        this.persons = persons;
+        this.names = names;
+        this.searchContext = searchingContext;
+        this.sortingContext = sortingContext;
     }
 
     public long linearSearch() {

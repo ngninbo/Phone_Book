@@ -1,15 +1,12 @@
 package phonebook.search;
 
 import phonebook.algorithm.searching.*;
-import phonebook.algorithm.sorting.BaseSort;
-import phonebook.algorithm.sorting.BubbleSort;
-import phonebook.algorithm.sorting.QuickSort;
 import phonebook.model.Person;
 
 import java.util.List;
 import java.util.Map;
 
-public class SearchStrategy implements SearchContext {
+public class SearchingStrategy implements SearchingContext {
 
     public BaseSearch linearSearch(List<Person> persons, List<String> names) {
         return new LinearSearch(persons, names).perform();
