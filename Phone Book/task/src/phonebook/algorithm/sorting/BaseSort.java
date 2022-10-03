@@ -15,6 +15,7 @@ public abstract class BaseSort {
         this.persons = persons;
     }
 
+    public abstract BaseSort perform();
 
     public long getDuration() {
         return duration;

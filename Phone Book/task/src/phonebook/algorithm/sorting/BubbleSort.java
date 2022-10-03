@@ -7,11 +7,19 @@ import java.util.List;
 
 public class BubbleSort extends BaseSort {
 
+    private long limit;
+
     public BubbleSort(List<Person> persons) {
         super(persons);
     }
 
-    public BaseSort perform(long limit) {
+    public BubbleSort withTimeLimit(long limit) {
+        this.limit = limit;
+        return this;
+    }
+
+    @Override
+    public BaseSort perform() {
         int n = persons.size();
 
         long start = System.currentTimeMillis();

@@ -14,7 +14,8 @@ public class QuickSort extends BaseSort {
         super(persons);
     }
 
-    public BaseSort quickSort() {
+    @Override
+    public BaseSort perform() {
         long start = System.currentTimeMillis();
         quickSort(persons, 0, persons.size() - 1);
         long end = System.currentTimeMillis();
