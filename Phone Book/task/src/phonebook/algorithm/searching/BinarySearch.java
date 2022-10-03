@@ -13,10 +13,20 @@ public class BinarySearch extends BaseSearch {
 
     @Override
     public BaseSearch perform() {
-        results = new ArrayList<>();
+        long start = System.currentTimeMillis();
+        results = search(names);
+
+        long end = System.currentTimeMillis();
+        duration = end - start;
+        return this;
+    }
+
+    @Override
+    public List<Person> search(List<String> names) {
+
+        List<Person> results = new ArrayList<>();
         int idx;
 
-        long start = System.currentTimeMillis();
         for (String name : names) {
             idx = binarySearch(persons, 0, persons.size(), name);
             if (idx != -1) {
@@ -24,9 +34,7 @@ public class BinarySearch extends BaseSearch {
             }
         }
 
-        long end = System.currentTimeMillis();
-        duration = end - start;
-        return this;
+        return results;
     }
 
     public int binarySearch(List<Person> list, int left, int right, String name) {

@@ -14,8 +14,20 @@ public class LinearSearch extends BaseSearch {
     @Override
     public LinearSearch perform() {
 
-        results = new ArrayList<>();
         long start = System.currentTimeMillis();
+        results = search(names);
+        long end = System.currentTimeMillis();
+
+        duration = end - start;
+
+        return this;
+    }
+
+    @Override
+    public List<Person> search(List<String> names) {
+
+        List<Person> results = new ArrayList<>();
+
         for (String name : names) {
             for (Person person : persons) {
                 if (person.getName().equals(name)) {
@@ -23,10 +35,7 @@ public class LinearSearch extends BaseSearch {
                 }
             }
         }
-        long end = System.currentTimeMillis();
 
-        duration = end - start;
-
-        return this;
+        return results;
     }
 }

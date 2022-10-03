@@ -15,17 +15,8 @@ public class SearchStrategy implements SearchContext {
         return new LinearSearch(persons, names).perform();
     }
 
-    public BaseSort bubbleSort(List<Person> persons, long limit) {
-        return new BubbleSort(persons).withTimeLimit(limit).perform();
-    }
-
     public BaseSearch jumpSearch(List<Person> persons, List<String> names) {
         return new JumpSearch(persons, names).perform();
-    }
-
-    @Override
-    public BaseSort quickSort(List<Person> persons) {
-       return new QuickSort(persons).perform();
     }
 
     @Override

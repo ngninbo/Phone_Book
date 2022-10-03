@@ -21,6 +21,8 @@ public abstract class BaseSearch {
 
     public abstract BaseSearch perform();
 
+    public abstract List<Person> search(List<String> names);
+
     public long getDuration() {
         return duration;
     }

@@ -13,21 +13,26 @@ public class JumpSearch extends BaseSearch {
 
     @Override
     public BaseSearch perform() {
-        results = new ArrayList<>();
-        int idx;
-
         long start = System.currentTimeMillis();
+        results = search(names);
+
+        long end = System.currentTimeMillis();
+        duration = end - start;
+
+        return this;
+    }
+
+    @Override
+    public List<Person> search(List<String> names) {
+        List<Person> results = new ArrayList<>();
+        int idx;
         for (String name : names) {
             idx = jumpSearch(persons, name);
             if (idx != -1) {
                 results.add(persons.get(idx));
             }
         }
-
-        long end = System.currentTimeMillis();
-        duration = end - start;
-
-        return this;
+        return results;
     }
 
 
