@@ -1,5 +1,8 @@
 package phonebook.search;
 
+import phonebook.algorithm.searching.BaseSearch;
+import phonebook.algorithm.searching.InstantSearch;
+import phonebook.algorithm.sorting.BaseSort;
 import phonebook.model.Person;
 
 import java.util.List;
@@ -7,13 +10,13 @@ import java.util.Map;
 
 public interface SearchContext {
 
-    SearchResult<Person> linearSearch(List<Person> people, List<String> names);
-    SearchResult<Person> bubbleSort(List<Person> persons, long duration);
-    SearchResult<Person> jumpSearch(List<Person> persons, List<String> names);
+    BaseSearch linearSearch(List<Person> people, List<String> names);
+    BaseSort bubbleSort(List<Person> persons, long duration);
+    BaseSearch jumpSearch(List<Person> persons, List<String> names);
 
-    SearchResult<Person> quickSort(List<Person> persons);
+    BaseSort quickSort(List<Person> persons);
 
-    SearchResult<Person> binarySearch(List<Person> results, List<String> names);
+    BaseSearch binarySearch(List<Person> results, List<String> names);
 
-    SearchResult<Person> instantSearch(Map<String, Person> map, List<String> names);
+    InstantSearch instantSearch(Map<String, Person> map, List<String> names);
 }

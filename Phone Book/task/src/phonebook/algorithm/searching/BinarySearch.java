@@ -1,7 +1,6 @@
 package phonebook.algorithm.searching;
 
 import phonebook.model.Person;
-import phonebook.search.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,8 @@ public class BinarySearch extends BaseSearch {
     }
 
     @Override
-    public SearchResult<Person> perform() {
-        List<Person> results = new ArrayList<>();
+    public BaseSearch perform() {
+        results = new ArrayList<>();
         int idx;
 
         long start = System.currentTimeMillis();
@@ -26,8 +25,8 @@ public class BinarySearch extends BaseSearch {
         }
 
         long end = System.currentTimeMillis();
-        long duration = end - start;
-        return new SearchResult<>("Searching", duration, results);
+        duration = end - start;
+        return this;
     }
 
     public int binarySearch(List<Person> list, int left, int right, String name) {

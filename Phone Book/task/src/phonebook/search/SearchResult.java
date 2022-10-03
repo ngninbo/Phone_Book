@@ -1,6 +1,6 @@
 package phonebook.search;
 
-import phonebook.SearchUtil;
+import phonebook.util.SearchUtil;
 
 import java.util.List;
 

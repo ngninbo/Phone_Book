@@ -1,4 +1,4 @@
-package phonebook;
+package phonebook.util;
 
 import phonebook.model.Person;
 
@@ -18,7 +18,7 @@ public class SearchUtil {
     private static final long millisecond = 1000; //s
     private static final long minute = 60; // s
 
-    public static List<Person> getPersons() throws FileNotFoundException {
+    public static List<Person> loadPersons() throws FileNotFoundException {
         List<Person> persons = new ArrayList<>();
         File file = new File(DIRECTORY_PATH);
 

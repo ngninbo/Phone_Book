@@ -1,7 +1,6 @@
 package phonebook.algorithm.searching;
 
 import phonebook.model.Person;
-import phonebook.search.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class LinearSearch extends BaseSearch {
     }
 
     @Override
-    public SearchResult<Person> perform() {
+    public LinearSearch perform() {
 
         results = new ArrayList<>();
         long start = System.currentTimeMillis();
@@ -28,6 +27,6 @@ public class LinearSearch extends BaseSearch {
 
         duration = end - start;
 
-        return new SearchResult<>("Searching", duration, results);
+        return this;
     }
 }

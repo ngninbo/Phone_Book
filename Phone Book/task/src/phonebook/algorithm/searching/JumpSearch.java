@@ -1,7 +1,6 @@
 package phonebook.algorithm.searching;
 
 import phonebook.model.Person;
-import phonebook.search.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class JumpSearch extends BaseSearch {
     }
 
     @Override
-    public SearchResult<Person> perform() {
+    public BaseSearch perform() {
         results = new ArrayList<>();
         int idx;
 
@@ -26,9 +25,9 @@ public class JumpSearch extends BaseSearch {
         }
 
         long end = System.currentTimeMillis();
-        long duration = end - start;
+        duration = end - start;
 
-        return new SearchResult<>("Jump search", duration, results);
+        return this;
     }
 
 

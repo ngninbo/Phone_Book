@@ -1,8 +1,8 @@
 package phonebook.algorithm.sorting;
 
 import phonebook.model.Person;
-import phonebook.search.SearchResult;
 
+import java.util.Collections;
 import java.util.List;
 
 public class BubbleSort extends BaseSort {
@@ -11,7 +11,7 @@ public class BubbleSort extends BaseSort {
         super(persons);
     }
 
-    public SearchResult<Person> perform(long limit) {
+    public BaseSort perform(long limit) {
         int n = persons.size();
 
         long start = System.currentTimeMillis();
@@ -30,7 +30,8 @@ public class BubbleSort extends BaseSort {
                 final long tmpDuration = tmp - start;
                 duration = tmpDuration;
                 if (tmpDuration > 10 * limit) {
-                    return new SearchResult<>("Sorting", duration, List.of());
+                    persons = Collections.emptyList();
+                    return this;
                 }
             }
         }
@@ -38,6 +39,6 @@ public class BubbleSort extends BaseSort {
 
         duration = end - start;
 
-        return new SearchResult<>("Sorting", duration, persons);
+        return this;
     }
 }

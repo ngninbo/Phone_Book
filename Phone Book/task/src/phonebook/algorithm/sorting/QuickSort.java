@@ -1,7 +1,6 @@
 package phonebook.algorithm.sorting;
 
 import phonebook.model.Person;
-import phonebook.search.SearchResult;
 
 import java.util.List;
 
@@ -15,12 +14,12 @@ public class QuickSort extends BaseSort {
         super(persons);
     }
 
-    public SearchResult<Person> quickSort() {
+    public BaseSort quickSort() {
         long start = System.currentTimeMillis();
         quickSort(persons, 0, persons.size() - 1);
         long end = System.currentTimeMillis();
         duration = end - start;
-        return new SearchResult<>("Sorting", duration, persons);
+        return this;
     }
 
     static void swap(List<Person> list, int i, int j) {

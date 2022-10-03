@@ -418,7 +418,7 @@ files:
         int binarySearch(List<Person> persons, int l, int r, String name);
     }
   learner_created: true
-- name: src/phonebook/PhoneRepository.java
+- name: src/phonebook/SearchFactory.java
   visible: true
   text: |
     package phonebook;
@@ -475,7 +475,7 @@ files:
         }
     }
   learner_created: true
-- name: src/phonebook/SearchUtil.java
+- name: src/phonebook/util/SearchUtil.java
   visible: true
   text: |
     package phonebook;
@@ -550,6 +550,9 @@ files:
             System.out.printf("Sorting time: %d min. %d sec. %d ms. - STOPPED, moved to linear search\n", minutes, seconds, milliseconds);
         }
     }
+  learner_created: true
+- name: src/phonebook/algorithm/searching/InstantSearch.java
+  visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/7721#comment
 status: Solved
