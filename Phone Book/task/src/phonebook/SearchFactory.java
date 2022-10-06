@@ -6,6 +6,7 @@ import phonebook.algorithm.sorting.BaseSort;
 import phonebook.model.Person;
 import phonebook.search.SearchingContext;
 import phonebook.search.SortingContext;
+import phonebook.util.SearchDuration;
 import phonebook.util.SearchUtil;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class SearchFactory {
         if (sorting.getPersons().isEmpty()) {
             BaseSearch ls = searchContext.linearSearch(persons, names);
             printOutcome(ls.getResults().size(), sorting.getDuration() + ls.getDuration());
-            SearchUtil.printSortDuration(sorting.getDuration());
+            SearchUtil.printSortDuration(new SearchDuration(sorting.getDuration()));
             ls.printDuration();
 
         } else {
@@ -76,12 +77,12 @@ public class SearchFactory {
         long creationTime = end - start;
         InstantSearch search = searchContext.instantSearch(map, names).perform();
 
-        SearchUtil.printSearchResult(search.getResults().size(), names.size(), search.getDuration() + creationTime);
-        SearchUtil.printDuration("Creating", creationTime);
+        SearchUtil.printSearchResult(search.getResults().size(), names.size(), new SearchDuration(search.getDuration() + creationTime));
+        SearchUtil.printDuration("Creating", new SearchDuration(creationTime));
         search.printDuration();
     }
 
     private void printOutcome(int resultSize, long duration) {
-        SearchUtil.printSearchResult(resultSize, names.size(), duration);
+        SearchUtil.printSearchResult(resultSize, names.size(), new SearchDuration(duration));
     }
 }

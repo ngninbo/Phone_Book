@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/210117/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Mon, 03 Oct 2022 13:21:53 UTC
+update_date: Thu, 06 Oct 2022 20:34:17 UTC
 stages:
 - id: 340
   step: 5482
@@ -149,8 +149,14 @@ topics:
     theory_id: 7046
   - title: Writing files
     theory_id: 3652
+  - title: What is a bug
+    theory_id: 5504
   - title: IntelliJ IDEA
     theory_id: 3801
+  - title: Introduction to logging
+    theory_id: 5538
+  - title: Debugging techniques
+    theory_id: 13775
   - title: LocalTime
     theory_id: 3593
   - title: LocalDate

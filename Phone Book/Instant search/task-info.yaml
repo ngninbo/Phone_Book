@@ -204,50 +204,6 @@ files:
         }
     }
   learner_created: true
-- name: src/phonebook/search/SearchResult.java
-  visible: true
-  text: |
-    package phonebook;
-
-    import java.util.List;
-
-    public class SearchAlgorithm<T> {
-
-        private String name;
-        private long duration;
-        private List<T> results;
-
-        public SearchAlgorithm(String name, long duration, List<T> results) {
-            this.name = name;
-            this.duration = duration;
-            this.results = results;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public long getDuration() {
-            return duration;
-        }
-
-        public void setDuration(long duration) {
-            this.duration = duration;
-        }
-
-        public List<T> getResults() {
-            return results;
-        }
-
-        public void setResults(List<T> results) {
-            this.results = results;
-        }
-    }
-  learner_created: true
 - name: src/phonebook/SearchFactory.java
   visible: true
   text: |
@@ -562,6 +518,9 @@ files:
             return -1;
         }
     }
+  learner_created: true
+- name: src/phonebook/util/SearchDuration.java
+  visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/7721#comment
 status: Solved

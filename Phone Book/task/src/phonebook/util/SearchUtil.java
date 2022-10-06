@@ -15,9 +15,6 @@ public class SearchUtil {
     public static final String DIRECTORY_PATH = "/Users/bdongmo-ngnintedem/Downloads/directory.txt";
     public static final String FIND_PATH = "/Users/bdongmo-ngnintedem/Downloads/find.txt";
 
-    private static final long millisecond = 1000; //s
-    private static final long minute = 60; // s
-
     public static List<Person> loadPersons() throws FileNotFoundException {
         List<Person> persons = new ArrayList<>();
         File file = new File(DIRECTORY_PATH);
@@ -50,25 +47,16 @@ public class SearchUtil {
         return names;
     }
 
-    public static void printSearchResult(int resultLength, int searchLength, long duration) {
-        final long minutes = duration / (minute * millisecond);
-        final long seconds = duration % (minute * millisecond) / millisecond;
-        final long milliseconds = duration % (minute * millisecond) % millisecond;
+    public static void printSearchResult(int resultLength, int searchLength, SearchDuration duration) {
         System.out.printf("Found %d / %d entries. Time taken: %d min. %d sec. %d ms.\n",
-                resultLength, searchLength, minutes, seconds, milliseconds);
+                resultLength, searchLength, duration.getMinutes(), duration.getSeconds(), duration.getMilliseconds());
     }
 
-    public static void printDuration(String opt, long duration) {
-        final long minutes = duration / (minute * millisecond);
-        final long seconds = duration % (minute * millisecond) / millisecond;
-        final long milliseconds = duration % (minute * millisecond) % millisecond;
-        System.out.printf("%s time: %d min. %d sec. %d ms.\n", opt, minutes, seconds, milliseconds);
+    public static void printDuration(String opt, SearchDuration duration) {
+        System.out.printf("%s time: %d min. %d sec. %d ms.\n", opt, duration.getMinutes(), duration.getSeconds(), duration.getMilliseconds());
     }
 
-    public static void printSortDuration(long duration) {
-        final long minutes = duration / (minute * millisecond);
-        final long seconds = duration % (minute * millisecond) / millisecond;
-        final long milliseconds = duration % (minute * millisecond) % millisecond;
-        System.out.printf("Sorting time: %d min. %d sec. %d ms. - STOPPED, moved to linear search\n", minutes, seconds, milliseconds);
+    public static void printSortDuration(SearchDuration duration) {
+        System.out.printf("Sorting time: %d min. %d sec. %d ms. - STOPPED, moved to linear search\n", duration.getMinutes(), duration.getSeconds(), duration.getMilliseconds());
     }
 }

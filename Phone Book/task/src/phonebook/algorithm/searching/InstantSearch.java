@@ -1,6 +1,7 @@
 package phonebook.algorithm.searching;
 
 import phonebook.model.Person;
+import phonebook.util.SearchDuration;
 import phonebook.util.SearchUtil;
 
 import java.util.List;
@@ -56,6 +57,6 @@ public class InstantSearch {
     }
 
     public void printDuration() {
-        SearchUtil.printDuration(OPERATION, duration);
+        SearchUtil.printDuration(OPERATION, new SearchDuration(duration));
     }
 }
