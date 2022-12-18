@@ -31,6 +31,7 @@ public class SearchFactory {
     }
 
     public long linearSearch() {
+        System.out.println("Start searching (linear search)...");
         final BaseSearch search = searchContext.linearSearch(persons, names);
         printOutcome(search.getResults().size(), search.getDuration());
         return search.getDuration();
@@ -45,6 +46,7 @@ public class SearchFactory {
     }
 
     public void jumpingBubbles(long lsDuration) {
+        System.out.println("\nStart searching (bubble sort + jump search)...");
         BaseSort sorting = this.bubbleSort(lsDuration);
         if (sorting.getPersons().isEmpty()) {
             BaseSearch ls = searchContext.linearSearch(persons, names);
@@ -61,6 +63,7 @@ public class SearchFactory {
     }
 
     public void quickBinary() {
+        System.out.println("\nStart searching (quick sort + binary search)...");
         BaseSort sort = sortingContext.quickSort(persons);
         BaseSearch search = searchContext.binarySearch(sort.getPersons(), names);
         printOutcome(search.getResults().size(), search.getDuration() + sort.getDuration());
@@ -69,6 +72,7 @@ public class SearchFactory {
     }
 
     public void instantSearch() {
+        System.out.println("\nStart searching (hash table)...");
         long start = System.currentTimeMillis();
         Map<String, Person> map = IntStream.range(0, persons.size())
                 .boxed()

@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SearchUtil {
 
-    public static final String DIRECTORY_PATH = "/Users/bdongmo-ngnintedem/Downloads/directory.txt";
-    public static final String FIND_PATH = "/Users/bdongmo-ngnintedem/Downloads/find.txt";
+    public static final String DIRECTORY_PATH = "/Users/bdongmo-ngnintedem/Downloads/small_directory.txt";
+    public static final String FIND_PATH = "/Users/bdongmo-ngnintedem/Downloads/small_find.txt";
 
     public static List<Person> loadPersons() throws FileNotFoundException {
         List<Person> persons = new ArrayList<>();

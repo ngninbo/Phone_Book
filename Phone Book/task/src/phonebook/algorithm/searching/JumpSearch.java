@@ -42,16 +42,14 @@ public class JumpSearch extends BaseSearch {
 
         int step = (int) Math.floor(Math.sqrt(n));
 
-        while (sortedPersons.get(Math.min(step, n) - 1).getName().compareTo(name) < 0)
-        {
+        while (sortedPersons.get(Math.min(step, n) - 1).getName().compareTo(name) < 0) {
             prev = step;
             step += (int) Math.floor(Math.sqrt(n));
             if (prev >= n)
                 return -1;
         }
 
-        while (sortedPersons.get(prev).getName().compareTo(name) < 0)
-        {
+        while (sortedPersons.get(prev).getName().compareTo(name) < 0) {
             prev++;
 
             if (prev == Math.min(step, n))

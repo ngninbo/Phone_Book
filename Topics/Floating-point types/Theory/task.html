@@ -2,7 +2,7 @@
 <html>
  <head></head>
  <body>
-  <p>A floating point numeral refers generally to the notation of a number which contains the integer part and the fractional part and their separator (for example 0.01 or 3.1415). Such numbers represent fractions which are often used in science, statistics, engineering, and many other fields.</p> 
+  <p>A floating point numeral refers generally to the notation of a number which contains an integer part, a fractional part and their separator (for example 0.01 or 3.1415). Such numbers represent fractions which are often used in science, statistics, engineering, and many other fields.</p> 
   <p>Java has two basic types to represent such numbers: <code class="language-java">float</code> and <code class="language-java">double</code>. They are called <strong>floating-point types</strong>. In fact, these types cannot represent an arbitrary decimal number, because they support only a limited number of significant decimal digits (6-7 for <code class="language-java">float</code>, and 14-16 for <code class="language-java">double</code>). In addition, <code class="language-java">double</code> can represent a wider range of numbers than <code class="language-java">float</code>.</p> 
   <p>In practice, programmers mostly use the <code class="language-java">double</code> type and we recommend you to use it for our code challenges. But all the information below is valid for the <code class="language-java">float</code> type as well.</p> 
   <h5 id="declaring-variables-and-assigning-values" style="text-align: center;">Declaring variables and assigning values</h5> 
@@ -51,9 +51,9 @@ double d2 = 5.0 / 4; // 1.25</code></pre>
   <pre><code class="language-java">double d = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
 System.out.println(d); // it prints 0.9999999999999999</code></pre> 
   <p>Such errors happen because floating point numbers are actually stored and operated in binary form and not all real numbers can be represented exactly (similarly, we cannot represent the exact value of the 1/3 fraction in decimal form). In the following topics, we will find out how to deal with this issue. For now, just take it into consideration.</p> 
-  <p>If you want to learn more about floating-point numbers, you may read <a target="_blank" href="https://introcs.cs.princeton.edu/java/91float/" rel="noopener noreferrer nofollow">this article</a> as an addition.</p> 
+  <p>If you want to learn more about floating-point numbers, you may read <a href="https://introcs.cs.princeton.edu/java/91float/" rel="noopener noreferrer nofollow" target="_blank">this article</a> as an addition.</p> 
   <h5 id="reading-floating-point-numbers" style="text-align: center;">Reading floating-point numbers</h5> 
-  <p>You can use <code class="language-java">Scanner</code> to read the values of both floating-point types from the standard input.</p> 
+  <p>You can use a <code class="language-java">Scanner</code> to read the values of both floating-point types from the standard input.</p> 
   <pre><code class="language-java">Scanner scanner = new Scanner(System.in);
 
 float f = scanner.nextFloat();

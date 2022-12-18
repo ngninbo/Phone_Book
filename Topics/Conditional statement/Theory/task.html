@@ -16,12 +16,12 @@ if (age &gt; 100) {
     System.out.println("Very experienced person");
 }</code></pre> 
   <p>In this example, if the <code class="language-java">age</code> is greater than 100 the code prints <strong>"Very experienced person"</strong>, otherwise, it does nothing.</p> 
-  <p>Sometimes you will see a situation when the expression in a condition is a single <code class="language-java">boolean</code> type variable. Instead of writing <code class="language-java">b == true</code> or <code class="language-java">b == false</code>, use this variable (or its negation with <code class="language-java">!</code>) as the Boolean expression:</p> 
+  <p>Sometimes you will see a situation where the expression in a condition is a single <code class="language-java">boolean</code> type variable. Instead of writing <code class="language-java">b == true</code> or <code class="language-java">b == false</code>, use this variable (or its negation with <code class="language-java">!</code>) as the Boolean expression:</p> 
   <pre><code class="language-kotlin">boolean b = ...; // it is true or false
 if (b) { // or !b
     // do something
 }</code></pre> 
-  <p>A conditional statement can be used in any place in a program where the statement is expected. It can be even nested inside another conditional statement to perform multistage checks.</p> 
+  <p>A conditional statement can be used in any place in a program where the statement is expected. It can even be nested inside another conditional statement to perform multistage checks.</p> 
   <h5 id="the-if-else-cases" style="text-align: center;">The if-else-cases</h5> 
   <p>The if-case above can be extended with the keyword <code class="language-java">else</code> and another body to do alternative actions when the expression is <code class="language-java">false</code>.</p> 
   <pre><code class="language-java">if (expression) {    
@@ -67,7 +67,7 @@ if (dollars &lt; 1000) {
 } else {
     System.out.println("Buy a data center or a quantum computer");
 }</code></pre> 
-  <p>This conditional statement has four branches: <code class="language-java">dollars &lt; 1000</code>, <code class="language-java">dollars &lt; 2000</code>, <code class="language-java">dollars &lt; 100_000</code> and <code class="language-java">dollars &gt;= 100_000</code>. For example, if the value of dollars is <code class="language-java">10_000</code>, it prints <code class="language-java">"Buy a server"</code> because <code class="language-java">10_000</code> is more than <code class="language-java">2000</code> , which means that the first and the second conditions are false, and less than <code class="language-java">100_000</code> , which means that the third condition is true.</p> 
+  <p>This conditional statement has four branches: <code class="language-java">dollars &lt; 1000</code>, <code class="language-java">dollars &lt; 2000</code>, <code class="language-java">dollars &lt; 100_000</code> and <code class="language-java">dollars &gt;= 100_000</code>. For example, if the value of <code class="language-java">dollars</code> is <code class="language-java">10_000</code>, it prints <code class="language-java">"Buy a server"</code> because <code class="language-java">10_000</code> is more than <code class="language-java">2000</code> , which means that the first and the second conditions are false, and less than <code class="language-java">100_000</code> , which means that the third condition is true.</p> 
   <p>A conditional statement with multiple branches creates a <strong>decision tree</strong>, whose nodes consist of boolean expressions, and each branch is marked with <em>true</em> or <em>false</em>. The <em>true</em>-branch leads to a block of statements to be executed and a <code class="language-java">false</code>-branch leads to the next condition to be checked. The last false-branch means <strong>"</strong><em>in all other cases</em><strong>"</strong>.</p> 
   <p> </p> 
   <p></p>

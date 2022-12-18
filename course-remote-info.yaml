@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/210117/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Thu, 06 Oct 2022 20:34:17 UTC
+update_date: Sun, 18 Dec 2022 03:18:15 UTC
 stages:
 - id: 340
   step: 5482
@@ -31,14 +31,14 @@ topics:
     theory_id: 9704
   - title: Computer algorithms
     theory_id: 16547
+  - title: Immutability
+    theory_id: 7929
   - title: The big O notation
     theory_id: 16699
   - title: Best, average and worst cases
     theory_id: 20084
   - title: Data structures
     theory_id: 16927
-  - title: Immutability
-    theory_id: 7929
   - title: Computer programming
     theory_id: 8739
   - title: Paradigms
@@ -245,10 +245,6 @@ topics:
     theory_id: 5984
   - title: Recursion
     theory_id: 3550
-  - title: Decrease and conquer
-    theory_id: 14669
-  - title: Divide and conquer
-    theory_id: 19087
   - title: Binary search
     theory_id: 4955
   - title: Quick sort
